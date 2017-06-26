@@ -114,7 +114,7 @@ input:placeholder {
 
 .movie-item {
     flex: 0 0 48%;
-    padding: 7%;
+    padding: 3%;
     margin: 1%;
     box-shadow: 0px 1px 5px lightgrey;
     background-color: white;
@@ -139,6 +139,7 @@ input:placeholder {
     display: flex;
     justify-content: space-between;
     font-size: 12px;
+    z-index: 1;
 }
 
 .movie-item figure {
@@ -183,6 +184,10 @@ input:placeholder {
     top: 0;
     padding: 4% 6%;
     color: white;
+}
+
+.panel-wrap .info {
+    color: #fbe467;
 }
 
 .panel-wrap ~ h3 a {
@@ -243,7 +248,7 @@ input:placeholder {
     }
     .movie-item {
         flex: 0 0 31%;
-        padding: 1%;
+        padding: 2%;
     }
 }
 
@@ -254,6 +259,9 @@ input:placeholder {
     .movie-item {
         flex: 0 0 23%;
         padding: 1%;
+    }
+    .panel-wrap {
+        padding: 4%;
     }
 }
 
@@ -267,5 +275,8 @@ input:placeholder {
     .movie-item {
         flex: 0 0 18%;
         padding: 1%;
+    }
+    .panel-wrap {
+        padding: 6%;
     }
 }
