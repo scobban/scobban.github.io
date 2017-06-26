@@ -73,7 +73,6 @@ input:placeholder {
 
 .head {
     text-align: center;
-    z-index: 20;
 }
 
 .form-wrap {
@@ -81,24 +80,13 @@ input:placeholder {
 }
 
 .movie-form {
-    display: flex;
     margin: 0 auto;
-    width: 90%;
-}
-
-.movie-input {
-    flex: 6;
-}
-
-.movie-btn {
-    flex: 1;
-    margin-left: -1px;
 }
 
 .movie-input {
     padding: 10px;
     border: 2px solid #d5d8e6;
-    z-index: 21;
+    width: 100%;
 }
 
 .response-message {
