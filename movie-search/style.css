@@ -61,11 +61,25 @@ input:placeholder {
     opacity: 0.5;
 }
 
+/* ================== */
+/* General */
+/* ================== */
+
 .container {
     width: 100%;
     margin: 0 auto;
 }
 
+.alert {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    background-color: #e09148;
+    width: 100%;
+    text-align: center;
+    color: white;
+}
 
 /* ================== */
 /* Search */

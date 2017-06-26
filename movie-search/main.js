@@ -21,6 +21,14 @@ Example endpoint: http://www.omdbapi.com/?i=tt3896198&apikey=ada5c403
 'use strict';
 var MovieApp = {};
 
+var delay = (function(){
+    var timer = 0;
+    return function(callback, ms){
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+    };
+})();
+
 MovieApp.compileItem = function(template, item) {
     var source = template.html();
     var template = Handlebars.compile(source);
@@ -85,29 +93,33 @@ $(function() {
             }
         });
 
-        request.done(function(data) {
-            var movies = data.Search;
-            var errorMessage = $("<h3 class='response-message'>No movies were found for this search. Give it another shot.</h3>");
-            if (movies == undefined || movies == 'undefined') {
-                $(errorMessage).appendTo(".head");
-                return;
-            }
-            for (var i = 0; i < movies.length; i++) {
-                var moviePoster = movies[i].Poster;
-                var movieTitle = movies[i].Title;
-                var movieType = movies[i].Type;
-                var movieYear = movies[i].Year;
-                var movieID = movies[i].imdbID;
-                if (moviePoster == "N/A") {
-                    var moviePoster = "https://movie-upload.appspot.com/images/datastore?id=NoImageAvailable"
+        delay(function(){
+
+            request.done(function(data) {
+                var movies = data.Search;
+                var errorMessage = $("<h3 class='response-message'>No movies were found for this search. Give it another shot.</h3>");
+                if (movies == undefined || movies == 'undefined') {
+                    $(errorMessage).appendTo(".head");
+                    return;
                 }
-                var posterHtml = "<img class='poster' data-type='" + movieType + "' data-title='" + movieTitle + " 'data-year='" + movieYear + "' data-imdbid='" + movieID + "' src='" + moviePoster + "'>";
-                var movieUrl = "http://www.imdb.com/title/" + movieID;
-                MovieApp.addToTemplate(posterHtml, movieTitle, movieYear, movieType, movieUrl);
-            };
-        }).fail(function(data) {
-            alert("There was an error. Please try again..");
-        });
+                for (var i = 0; i < movies.length; i++) {
+                    var moviePoster = movies[i].Poster;
+                    var movieTitle = movies[i].Title;
+                    var movieType = movies[i].Type;
+                    var movieYear = movies[i].Year;
+                    var movieID = movies[i].imdbID;
+                    if (moviePoster == "N/A") {
+                        var moviePoster = "https://movie-upload.appspot.com/images/datastore?id=NoImageAvailable"
+                    }
+                    var posterHtml = "<img class='poster' data-type='" + movieType + "' data-title='" + movieTitle + " 'data-year='" + movieYear + "' data-imdbid='" + movieID + "' src='" + moviePoster + "'>";
+                    var movieUrl = "http://www.imdb.com/title/" + movieID;
+                    MovieApp.addToTemplate(posterHtml, movieTitle, movieYear, movieType, movieUrl);
+                };
+            }).fail(function(data) {
+                $("body").append("<div class='alert'>There was an error. Please try again.</div>");
+            });
+
+        }, 200 );
 
     });
 
