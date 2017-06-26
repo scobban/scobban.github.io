@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Movie DB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Spectral:400,500,600" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <script id="movie-template" type="text/x-handlebars-template">
+        <article class="movie-item type-{{type}}">
+            <figure>
+                {{{poster}}}
+            </figure>
+            <h3><a href="{{link}}" target="_blank">{{title}}</a></h3>
+            <div class="info">
+                <span>{{year}}</span>
+                <span class="badge">{{{type}}}</span>
+            </div>
+        </article>
+    </script>
+    <script id="modal-template" type="text/x-handlebars-template">
+        <a class="close">&#10005;</a>
+        <div class="info">
+            <span>
+                Rated {{mpaa}}
+            </span>
+            <span>
+                {{runtime}} long
+            </span>
+        </div>
+        <p class="plot-spot">{{plot}}</p>
+        <div class="bar-wrap">
+            <div class="bar-segment" style="width: {{barWidth}}">
+                <div class="bar-text">
+                    {{rating}} IMDB rating
+                </div>
+            </div>
+        </div>
+    </script>
+</head>
+
+<body>
+    <main class="container">
+        <div class="head">
+            <h1>Screen Quest</h1>
+            <h2>A movie and TV search app.</h2>
+            <form id="movie_form" class="movie-form">
+                <input type="search" id="movie_search" class="movie-input" placeholder="Search for a movie" />
+            </form>
+        </div>
+        <div class="panel-wrap"></div>
+        <section class="movie-output"></section>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="handlebars-v4.0.5.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script src="main.js" type="text/javascript" charset="utf-8" async defer></script>
+</body>
+
+</html>

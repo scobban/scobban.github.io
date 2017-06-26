@@ -1,0 +1,283 @@
+/* ================== */
+/* Base styles */
+/* ================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #f9f9f9;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+}
+
+h1,
+h2,
+.response-message {
+    font-family: 'Spectral', Georgia, serif;
+}
+
+h1 {
+    font-size: 55px;
+    font-weight: 600;
+    margin: 15px 0 10px;
+    color: #313160;
+    line-height: 1;
+}
+
+h2 {
+    font-weight: 400;
+    margin-top: 10px;
+    color: #6d6d8c;
+}
+
+figure {
+    margin: 0;
+}
+
+body,
+input {
+    font-size: 14px;
+}
+
+input::-webkit-input-placeholder {
+    color: #6d6d8c;
+    opacity: 0.5;
+}
+
+input:-ms-input-placeholder {
+    color: #6d6d8c;
+    opacity: 0.5;
+}
+
+input::placeholder {
+    color: #6d6d8c;
+    opacity: 0.5;
+}
+
+input:placeholder {
+    color: #6d6d8c;
+    opacity: 0.5;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+/* ================== */
+/* Search */
+/* ================== */
+
+.head {
+    text-align: center;
+    z-index: 20;
+}
+
+.form-wrap {
+    position: relative;
+}
+
+.movie-form {
+    display: flex;
+    margin: 0 auto;
+    width: 90%;
+}
+
+.movie-input {
+    flex: 6;
+}
+
+.movie-btn {
+    flex: 1;
+    margin-left: -1px;
+}
+
+.movie-input {
+    padding: 10px;
+    border: 2px solid #d5d8e6;
+    z-index: 21;
+}
+
+.response-message {
+    margin-top: 50px;
+    font-size: 21px;
+    opacity: 0.7;
+}
+
+
+/* ================== */
+/* Output */
+/* ================== */
+
+.movie-output {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    margin-top: 30px;
+}
+
+.badge {
+    color: gray;
+    opacity: 0.7;
+}
+
+.movie-item {
+    flex: 0 0 48%;
+    padding: 7%;
+    margin: 1%;
+    box-shadow: 0px 1px 5px lightgrey;
+    background-color: white;
+    position: relative;
+    border-bottom: 3px solid transparent;
+}
+
+.type-movie {
+    border-color: #47a0e7;
+}
+
+.type-series {
+    border-color: #e36759;
+}
+
+.type-episode {
+    border-color: #6ecdb4;
+}
+
+.movie-item .info {
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.movie-item figure {
+    text-align: center;
+}
+
+.movie-item img {
+    max-width: 100%;
+    cursor: pointer;
+}
+
+.movie-item h3 {
+    margin: 3px 0;
+    position: relative;
+    z-index: 3;
+    font-weight: 600;
+}
+
+.movie-item h3 a {
+    color: #444;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+}
+
+.movie-item h3 a:hover {
+    text-decoration: none;
+    border-bottom: 2px solid #ccc;
+}
+
+
+/* ================== */
+/* Info panel overlay */
+/* ================== */
+
+.panel-wrap {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0;
+    padding: 4% 6%;
+    color: white;
+}
+
+.panel-wrap ~ h3 a {
+    color: white;
+}
+
+.close {
+    position: absolute;
+    padding: 2px;
+    top: -1px;
+    right: 2px;
+    cursor: pointer;
+    opacity: 0.5;
+    font-size: 10px;
+}
+
+.plot-spot {
+    height: 200px;
+    margin-top: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.bar-wrap {
+    background-color: #222;
+    border: 1px solid #444;
+    width: 90%;
+    position: absolute;
+    bottom: 10px;
+    z-index: 2;
+}
+
+.bar-segment {
+    background-color: #6d6d8c;
+    color: black;
+    -webkit-transition: width 4s;
+    transition: width 4s;
+    width: 0;
+    height: 20px;
+}
+
+.bar-text {
+    color: white;
+    text-transform: uppercase;
+    position: absolute;
+    left: 3px;
+    top: 2px;
+    font-size: 12px;
+}
+
+/* ================== */
+/* Media-queries for mobile */
+/* ================== */
+
+@media (min-width: 500px) {
+    .movie-form {
+        width: 60%;
+    }
+    .movie-item {
+        flex: 0 0 31%;
+        padding: 1%;
+    }
+}
+
+@media (min-width: 800px) {
+    .movie-form {
+        width: 50%;
+    }
+    .movie-item {
+        flex: 0 0 23%;
+        padding: 1%;
+    }
+}
+
+@media (min-width: 1100px) {
+    .container {
+        width: 1000px;
+    }
+    .movie-form {
+        width: 40%;
+    }
+    .movie-item {
+        flex: 0 0 18%;
+        padding: 1%;
+    }
+}
