@@ -11,12 +11,12 @@
     <script id="movie-template" type="text/x-handlebars-template">
         <article class="movie-item type-{{type}}">
             <figure>
-                {{{poster}}}
+                <img class="poster" data-type="{{type}}" data-title="{{title}}" data-year="{{year}}" data-imdbid="{{id}}" src="{{poster}}">
             </figure>
             <h3><a href="{{link}}" target="_blank">{{title}}</a></h3>
             <div class="info">
                 <span>{{year}}</span>
-                <span class="badge">{{{type}}}</span>
+                <span class="badge">{{type}}</span>
             </div>
         </article>
     </script>
@@ -32,7 +32,7 @@
         </div>
         <p class="plot-spot">{{plot}}</p>
         <div class="bar-wrap">
-            <div class="bar-segment" style="width: {{barWidth}}">
+            <div class="bar-segment">
                 <div class="bar-text">
                     {{rating}} IMDB rating
                 </div>
@@ -52,6 +52,9 @@
         </div>
         <div class="panel-wrap"></div>
         <section class="movie-output"></section>
+        <div>
+            <a class="full-width full-btn" id="more-results" style="display: none;">more results</a>
+        </div>
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

@@ -21,10 +21,10 @@ Example endpoint: http://www.omdbapi.com/?i=tt3896198&apikey=ada5c403
 'use strict';
 var MovieApp = {};
 
-var delay = (function(){
+var delay = (function() {
     var timer = 0;
-    return function(callback, ms){
-        clearTimeout (timer);
+    return function(callback, ms) {
+        clearTimeout(timer);
         timer = setTimeout(callback, ms);
     };
 })();
@@ -35,7 +35,7 @@ MovieApp.compileItem = function(template, item) {
     return template(item);
 }
 
-MovieApp.addToTemplate = function(poster, title, year, type, link) {
+MovieApp.addToTemplate = function(type, title, year, poster, id, link) {
     var movieTemplate = $("#movie-template");
     var movieList = $(".movie-output");
     var movieObject = {
@@ -43,6 +43,7 @@ MovieApp.addToTemplate = function(poster, title, year, type, link) {
         title: title,
         year: year,
         type: type,
+        id: id,
         link: link
     };
     var compiledMovie = MovieApp.compileItem(movieTemplate, movieObject);
@@ -70,6 +71,11 @@ $(function() {
 
     var omdbUrl = "https://www.omdbapi.com";
     var omdbKey = "ada5c403";
+    var resultsError = $("<h3 class='response-message'>No movies were found for this search. Give it another shot.</h3>");
+    var pagingError = $("<h3>No more results.</h3>");
+    var tempMoviePoster = "https://movie-upload.appspot.com/images/datastore?id=NoImageAvailable"
+
+    var inputVal;
 
     $("body").submit(function() {
         return false;
@@ -81,7 +87,7 @@ $(function() {
 
         $(".response-message").remove();
 
-        var inputVal = $('#movie_search').val();
+        inputVal = $('#movie_search').val();
         if (inputVal == "") {
             return;
         }
@@ -89,17 +95,17 @@ $(function() {
             url: omdbUrl,
             data: {
                 s: inputVal,
+                page: "1",
                 apikey: omdbKey
             }
         });
 
-        delay(function(){
+        delay(function() {
 
             request.done(function(data) {
                 var movies = data.Search;
-                var errorMessage = $("<h3 class='response-message'>No movies were found for this search. Give it another shot.</h3>");
                 if (movies == undefined || movies == 'undefined') {
-                    $(errorMessage).appendTo(".head");
+                    $(resultsError).appendTo(".head");
                     return;
                 }
                 for (var i = 0; i < movies.length; i++) {
@@ -109,17 +115,20 @@ $(function() {
                     var movieYear = movies[i].Year;
                     var movieID = movies[i].imdbID;
                     if (moviePoster == "N/A") {
-                        var moviePoster = "https://movie-upload.appspot.com/images/datastore?id=NoImageAvailable"
+                        var moviePoster = tempMoviePoster;
                     }
                     var posterHtml = "<img class='poster' data-type='" + movieType + "' data-title='" + movieTitle + " 'data-year='" + movieYear + "' data-imdbid='" + movieID + "' src='" + moviePoster + "'>";
                     var movieUrl = "http://www.imdb.com/title/" + movieID;
-                    MovieApp.addToTemplate(posterHtml, movieTitle, movieYear, movieType, movieUrl);
+                    MovieApp.addToTemplate(movieType, movieTitle, movieYear, moviePoster, movieID, movieUrl);
                 };
+    
+                $("#more-results").show();
+
             }).fail(function(data) {
                 $("body").append("<div class='alert'>There was an error. Please try again.</div>");
             });
 
-        }, 200 );
+        }, 200);
 
     });
 
@@ -140,6 +149,9 @@ $(function() {
         request.done(function(data) {
             var calcWidth = data.imdbRating * 10 + '%';
             MovieApp.infoPanel(calcWidth, data.imdbRating, data.Rated, data.Runtime, data.Plot);
+            $(".bar-segment").animate({
+                width: calcWidth
+            }, 500);
         });
 
         $(".panel-wrap").html("").hide();
@@ -149,6 +161,42 @@ $(function() {
 
     $("body").on("click", ".close", function() {
         $(".panel-wrap").html("").hide().appendTo("body");
+    });
+
+    var nextPage = "2";
+
+    $("body").on("click", "#more-results", function() {
+        var request = $.ajax({
+            url: omdbUrl,
+            data: {
+                s: inputVal,
+                page: nextPage,
+                apikey: omdbKey
+            }
+        });
+        request.done(function(data) {
+            var movies = data.Search;
+            if (movies == undefined || movies == 'undefined') {
+                $("#more-results").removeClass("full-btn").addClass("no-more-message").text("No more results. You have them all already.");
+                return;
+            }
+            for (var i = 0; i < movies.length; i++) {
+                var moviePoster = movies[i].Poster;
+                var movieTitle = movies[i].Title;
+                var movieType = movies[i].Type;
+                var movieYear = movies[i].Year;
+                var movieID = movies[i].imdbID;
+                if (moviePoster == "N/A") {
+                    var moviePoster = "https://movie-upload.appspot.com/images/datastore?id=NoImageAvailable"
+                }
+                var posterHtml = "<img class='poster' data-type='" + movieType + "' data-title='" + movieTitle + " 'data-year='" + movieYear + "' data-imdbid='" + movieID + "' src='" + moviePoster + "'>";
+                var movieUrl = "http://www.imdb.com/title/" + movieID;
+                MovieApp.addToTemplate(movieType, movieTitle, movieYear, moviePoster, movieID, movieUrl);
+            };
+        });
+        
+        nextPage++;
+
     });
 
 });

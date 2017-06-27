@@ -81,6 +81,26 @@ input:placeholder {
     color: white;
 }
 
+.full-width {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    display: block;
+    margin-top: 40px;
+}
+
+.full-btn {
+    background-color: #e5e5e5;
+    cursor: pointer;
+}
+.full-btn:hover {
+    opacity: 0.6;
+}
+
+.no-more-message {
+    color: #fb9e67;
+}
+
 /* ================== */
 /* Search */
 /* ================== */
@@ -237,8 +257,6 @@ input:placeholder {
 .bar-segment {
     background-color: #6d6d8c;
     color: black;
-    -webkit-transition: width 4s;
-    transition: width 4s;
     width: 0;
     height: 20px;
 }
